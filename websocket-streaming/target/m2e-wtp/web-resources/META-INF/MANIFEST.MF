@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: streamingdatawebsocket
+Implementation-Version: 1.0.0
+Built-By: suresh
+Implementation-Vendor-Id: com.streaming.websocket
+Build-Jdk: 1.8.0_77
+Implementation-URL: http://projects.spring.io/spring-boot/websocket-st
+ reaming/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
