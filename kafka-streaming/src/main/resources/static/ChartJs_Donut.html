@@ -1,0 +1,117 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script>
+<script src="https://emn178.github.io/Chart.PieceLabel.js/src/Chart.PieceLabel.js"></script>
+</head>
+<body style="margin:0;padding:0">
+<div style="width:49.5%;height:49%;border:1px solid red;display:inline-block">
+<canvas id="myChart" style="max-width:99%;max-height:99%"></canvas>
+</div>
+<div style="width:49.5%;height:49%;border:1px solid red;display:inline-block"></div>
+<br>
+<div style="width:49%;height:49%;border:1px solid red;display:inline-block"></div>
+<div style="width:49%;height:49%;border:1px solid red;display:inline-block"></div>
+<script>
+var linkX,linkY,linkWd,linkHt=22,linkText,inLink;
+var data = {
+  labels: [
+    "Red",
+    "Blue",
+    "Yellow"
+  ],
+  datasets: [
+    {
+      data: [300, 50, 100],
+      backgroundColor: [
+        "#FF6384",
+        "#36A2EB",
+        "#FFCE56"
+      ],
+      hoverBackgroundColor: [
+        "#FF6384",
+        "#36A2EB",
+        "#FFCE56"
+      ],
+      borderColor: [
+        "#FF6384",
+        "#36A2EB",
+        "#FFCE56"
+      ]
+    }]
+};
+
+var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
+  type: 'doughnut',
+  data: data,
+  options: {
+  	responsive: true,
+    legend: {
+      display: false
+    },
+    pieceLabel: {
+    render: 'label',
+    arc:true
+  }
+  }
+});
+
+Chart.pluginService.register({
+  beforeDraw: function(chart) {
+    var width = chart.chart.width,
+        height = chart.chart.height,
+        ctx = chart.chart.ctx;
+
+    ctx.restore();
+    var fontSize = (height / 114).toFixed(2);
+    ctx.font = fontSize + "em sans-serif";
+    ctx.textBaseline = "middle";
+
+    var text = "75%",
+        textX = Math.round((width - ctx.measureText(text).width) / 2),
+        textY = height / 2;
+        linkText = text;
+        linkX=textX;
+        linkY=textY;
+        linkWd=ctx.measureText(text).width;
+
+
+    ctx.fillText(text, textX, textY);
+    ctx.save();
+  }
+});
+canvas = document.getElementById('myChart');
+canvas.addEventListener("mousemove", on_mousemove, false);
+canvas.addEventListener("click", on_click, false);
+function on_mousemove (ev) {
+  var x, y;
+
+  // Get the mouse position relative to the canvas element.
+  if (ev.layerX || ev.layerX == 0) { //for firefox
+    x = ev.layerX;
+    y = ev.layerY;
+  }
+  x-=canvas.offsetLeft;
+  y-=canvas.offsetTop;
+
+  //is the mouse over the link?
+  if(x>=linkX && x <= (linkX + linkWd) && y<=linkY && y>= (linkY-linkHt)){
+      document.body.style.cursor = "pointer";
+      inLink=true;
+  }
+  else{
+      document.body.style.cursor = "";
+      inLink=false;
+  }
+}
+
+//if the link has been clicked, go to link
+function on_click(e) {
+alert(inLink);
+  if (inLink)  {
+    alert(linkText);
+  }
+}
+
+</script>
+</body>
+</html>
