@@ -1,17 +1,35 @@
 <html>
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script>
+<script src="http://www.chartjs.org/dist/2.7.1/Chart.bundle.js"></script>
 <script src="https://emn178.github.io/Chart.PieceLabel.js/src/Chart.PieceLabel.js"></script>
+<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="LineChart.js"></script>
+<script src="BarChart.js"></script>
+<script src="DonutChart.js"></script>
 </head>
 <body style="margin:0;padding:0">
-<div style="width:49.5%;height:49%;border:1px solid red;display:inline-block">
-<canvas id="myChart" style="max-width:99%;max-height:99%"></canvas>
+<div style="width:49.5%;height:49%;border:0px solid red;display:inline-block">
+<canvas id="piechart" style="max-width:99%;max-height:99%;border:0px solid green"></canvas>
 </div>
-<div style="width:49.5%;height:49%;border:1px solid red;display:inline-block"></div>
+<div style="width:49.5%;height:49%;border:0px solid red;display:inline-block">
+  <canvas id="barchart" style="max-width:99%;max-height:99%;border:0px solid green"></canvas>
+</div>
 <br>
-<div style="width:49%;height:49%;border:1px solid red;display:inline-block"></div>
-<div style="width:49%;height:49%;border:1px solid red;display:inline-block"></div>
+<div style="width:50%;height:50%;border:0px solid red;display:inline-block">
+<canvas id="linechart" style="max-width:99%;max-height:99%"></canvas>
+
+</div>
+
 <script>
+  window.onload = function() {
+    pieChart.draw("piechart");
+    barChart.draw("barchart");
+    lineChart.draw("linechart");
+  }
+  
+//canvas.addEventListener("mousemove", function(ev){alert(ev.layerX)}, false);
+/*
 var linkX,linkY,linkWd,linkHt=22,linkText,inLink;
 var data = {
   labels: [
@@ -40,8 +58,9 @@ var data = {
     }]
 };
 
-var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
+var promisedDeliveryChart = new Chart(document.getElementById('piechart'), {
   type: 'doughnut',
+  centerText: 'All',
   data: data,
   options: {
   	responsive: true,
@@ -57,6 +76,7 @@ var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
 
 Chart.pluginService.register({
   beforeDraw: function(chart) {
+    if(!chart.chart.config.centerText){return null;}
     var width = chart.chart.width,
         height = chart.chart.height,
         ctx = chart.chart.ctx;
@@ -79,17 +99,19 @@ Chart.pluginService.register({
     ctx.save();
   }
 });
-canvas = document.getElementById('myChart');
+canvas = document.getElementById('piechart');
 canvas.addEventListener("mousemove", on_mousemove, false);
 canvas.addEventListener("click", on_click, false);
 function on_mousemove (ev) {
   var x, y;
 
   // Get the mouse position relative to the canvas element.
+  alert(ev.layerX)
   if (ev.layerX || ev.layerX == 0) { //for firefox
     x = ev.layerX;
     y = ev.layerY;
   }
+  
   x-=canvas.offsetLeft;
   y-=canvas.offsetTop;
 
@@ -106,12 +128,10 @@ function on_mousemove (ev) {
 
 //if the link has been clicked, go to link
 function on_click(e) {
-alert(inLink);
   if (inLink)  {
     alert(linkText);
   }
-}
-
+}*/
 </script>
 </body>
 </html>
